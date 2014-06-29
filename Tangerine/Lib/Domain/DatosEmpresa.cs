@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Lib.Domain
 {
-    public class Empresa
+    public class DatosEmpresa
     {
         private String nombreEmpresa;
         private int cedJuridica;
         private String correoContacto;
         private Direccion direccion;
 
-        public Empresa()
+        public DatosEmpresa()
         {
             direccion = new Direccion();
         }

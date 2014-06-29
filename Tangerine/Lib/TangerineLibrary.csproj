@@ -39,12 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ClienteData.cs" />
     <Compile Include="Domain\Canton.cs" />
     <Compile Include="Domain\Categoria.cs" />
     <Compile Include="Domain\Cliente.cs" />
     <Compile Include="Domain\Direccion.cs" />
     <Compile Include="Domain\Distrito.cs" />
-    <Compile Include="Domain\Empresa.cs" />
+    <Compile Include="Domain\DatosEmpresa.cs" />
     <Compile Include="Domain\Orden.cs" />
     <Compile Include="Domain\Producto.cs" />
     <Compile Include="Domain\Proveedor.cs" />
@@ -53,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\" />
-    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

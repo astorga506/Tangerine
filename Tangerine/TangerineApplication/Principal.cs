@@ -19,22 +19,12 @@ namespace TangerineApplication
             
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Principal_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void salirToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void clienteToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void EditarCliente(object sender, EventArgs e)
         {
             Form [] hijos = this.MdiChildren;
 
@@ -56,7 +46,37 @@ namespace TangerineApplication
                 editarCliente.MdiParent = this;
                 editarCliente.Show();
             }
-        }//Editar Cliente
+        }//EditarCliente
+
+        private void NuevoCliente(object sender, EventArgs e)
+        {
+            Form[] hijos = this.MdiChildren;
+
+            int i = 0;
+            Boolean encontrado = false;
+            while (i < hijos.Length && !encontrado)
+            {
+                if (hijos[i].Name == "EliminarCliente")
+                {
+                    encontrado = true;
+                    hijos[i].Focus();
+                    hijos[i].WindowState = FormWindowState.Normal;
+                }
+                i++;
+            }//buscar
+            if (!encontrado)
+            {
+                EliminarCliente eliminarCliente = new EliminarCliente();
+                eliminarCliente.MdiParent = this;
+                eliminarCliente.Show();
+            }
+
+        }//Nuevo Cliente
+
+        private void salir(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
     }//Class
 }//Namespace
