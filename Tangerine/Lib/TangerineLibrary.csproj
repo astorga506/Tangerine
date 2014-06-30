@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ClienteBusiness.cs" />
+    <Compile Include="Business\DireccionBusiness.cs" />
     <Compile Include="Data\CategoriaData.cs" />
     <Compile Include="Data\ClienteData.cs" />
     <Compile Include="Data\DireccionData.cs" />
@@ -56,9 +58,7 @@
     <Compile Include="Domain\Provincia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

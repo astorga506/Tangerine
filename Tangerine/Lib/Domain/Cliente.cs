@@ -20,6 +20,11 @@ namespace Lib.Domain
             direccion = new Direccion();
         }
 
+        public String NombreCompleto 
+        {
+            get { return apellidosCliente + ", " + nombreCliente; }  
+        }
+
         public Direccion Direccion
         {
             get { return direccion; }

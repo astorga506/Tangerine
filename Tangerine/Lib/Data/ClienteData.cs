@@ -18,7 +18,7 @@ namespace Lib.Data
 
         public Cliente EditarCliente(Cliente cliente)
         {
-            using(SqlConnection con = new SqlConnection())
+            using(SqlConnection con = new SqlConnection(cadenaConexion))
             {
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
@@ -52,7 +52,7 @@ namespace Lib.Data
 
         public Cliente InsertarCliente(Cliente cliente) 
         {
-            using (SqlConnection con = new SqlConnection())
+            using (SqlConnection con = new SqlConnection(cadenaConexion))
             {
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
@@ -88,7 +88,7 @@ namespace Lib.Data
 
         public void EliminarCliente(Cliente cliente)
         {
-            using (SqlConnection con = new SqlConnection())
+            using (SqlConnection con = new SqlConnection(cadenaConexion))
             {
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
@@ -113,9 +113,9 @@ namespace Lib.Data
         }//EliminarCliente
 
 
-        public LinkedList<Cliente> GetClientes(String palabraBusqueda)
+        public List<Cliente> GetClientes(String palabraBusqueda)
         {
-            LinkedList<Cliente> clientes = new LinkedList<Cliente>();
+            List<Cliente> clientes = new List<Cliente>();
 
             using (SqlConnection con = new SqlConnection(cadenaConexion))
             {
@@ -123,7 +123,7 @@ namespace Lib.Data
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "sp_obtener_clientes";
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@palabra_busqueda",System.Data.SqlDbType.VarChar);
+                SqlParameter param = new SqlParameter("@palabra_busqueda", palabraBusqueda);
                 cmd.Parameters.Add(param);
                 SqlDataReader drCliente =  cmd.ExecuteReader();
 
@@ -136,7 +136,7 @@ namespace Lib.Data
                     cliente.ApellidosCliente = drCliente.GetString(3);
                     cliente.Direccion = new DireccionData(cadenaConexion).GetDireccion(Int32.Parse(drCliente["cod_direccion"].ToString()));
 
-                    clientes.AddLast(cliente);
+                    clientes.Add(cliente);
                 }//while
 
             }//using con

@@ -8,7 +8,7 @@ namespace Lib.Domain
 {
     public class Canton
     {
-        private int codCanton;
+        private String codCanton;
         private String nombreCanton;
 
         public Canton()
@@ -21,9 +21,9 @@ namespace Lib.Domain
             get { return nombreCanton; }
             set { nombreCanton = value; }
         }
-        
 
-        public int CodCanton
+
+        public String CodCanton
         {
             get { return codCanton; }
             set { codCanton = value; }

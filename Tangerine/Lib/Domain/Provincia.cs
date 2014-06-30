@@ -8,7 +8,7 @@ namespace Lib.Domain
 {
     public class Provincia
     {
-        private int codProvincia;
+        private String codProvincia;
         private String nombreProvincia;
 
         public Provincia()
@@ -23,7 +23,7 @@ namespace Lib.Domain
         }
         
 
-        public int CodProvincia
+        public String CodProvincia
         {
             get { return codProvincia; }
             set { codProvincia = value; }

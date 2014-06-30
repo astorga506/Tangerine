@@ -8,7 +8,7 @@ namespace Lib.Domain
 {
     public class Distrito
     {
-        private int codDistrito;
+        private String codDistrito;
         private String nombreDistrito;
 
         public Distrito()
@@ -21,9 +21,9 @@ namespace Lib.Domain
             get { return nombreDistrito; }
             set { nombreDistrito = value; }
         }
-        
 
-        public int CodDistrito
+
+        public String CodDistrito
         {
             get { return codDistrito; }
             set { codDistrito = value; }
