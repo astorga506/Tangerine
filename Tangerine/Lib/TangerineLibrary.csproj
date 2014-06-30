@@ -39,7 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CategoriaData.cs" />
     <Compile Include="Data\ClienteData.cs" />
+    <Compile Include="Data\DireccionData.cs" />
+    <Compile Include="Data\ProductoData.cs" />
+    <Compile Include="Data\ProveedorData.cs" />
     <Compile Include="Domain\Canton.cs" />
     <Compile Include="Domain\Categoria.cs" />
     <Compile Include="Domain\Cliente.cs" />

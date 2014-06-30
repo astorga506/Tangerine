@@ -15,7 +15,7 @@ namespace TangerineApplication
         public EditarCliente()
         {
             InitializeComponent();
-            WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized;                        
         }
 
     }
