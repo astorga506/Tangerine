@@ -24,22 +24,19 @@ namespace Lib.Data
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
                 SqlCommand cmd = con.CreateCommand();
-
+                SqlParameter param = new SqlParameter();
                 cmd.Transaction = tran;
+                cmd.CommandText = "sp_insertar_proveedor";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                param.ParameterName = "@cod_proveedor";
+                param.Direction = System.Data.ParameterDirection.Output;
+                cmd.Parameters.Add(param);
+                cmd.Parameters.Add(new SqlParameter("@nombre_proveedor", proveedor.NombreProveedor));
+
                 try
-                {                    
-                    new DireccionData(cadenaConexion).InsertarDireccion(proveedor.Direccion, cmd);
-                    cmd.Parameters.Clear();
-                    SqlParameter param = new SqlParameter("@cod_proveedor", System.Data.SqlDbType.Int);                    
-                    cmd.CommandText = "sp_insertar_proveedor";
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-                    cmd.Parameters.Add(new SqlParameter("@nombre_proveedor", proveedor.NombreProveedor));
+                {
                     cmd.ExecuteNonQuery();
-                    proveedor.CodProveedor = Int32.Parse(cmd.Parameters["@cod_proveedor"].ToString());
-                    
-                    tran.Commit();
+                    new DireccionData(cadenaConexion).InsertarDireccion(proveedor.Direccion);
                 }//try
                 catch (SqlException ex)
                 {
@@ -69,8 +66,7 @@ namespace Lib.Data
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    new DireccionData(cadenaConexion).EditarDireccion(proveedor.Direccion, cmd);
-                    tran.Commit();
+                    new DireccionData(cadenaConexion).EditarDireccion(proveedor.Direccion);
                 }
                 catch (SqlException ex)
                 {
@@ -98,8 +94,7 @@ namespace Lib.Data
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    new DireccionData(cadenaConexion).EliminarDireccion(proveedor.Direccion.CodDireccion, cmd);
-                    tran.Commit();
+                    new DireccionData(cadenaConexion).EliminarDireccion(proveedor.Direccion.CodDireccion);
                 }//try
                 catch (SqlException ex)
                 {

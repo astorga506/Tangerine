@@ -12,6 +12,7 @@ namespace Lib.Domain
         private String correo;
         private String nombreCliente;
         private String apellidosCliente;
+        private String contrasena;
         private Direccion direccion;
 
         public Cliente()
@@ -29,7 +30,14 @@ namespace Lib.Domain
             get { return direccion; }
             set { direccion = value; }
         }
-       
+        
+
+        public String Contrasena
+        {
+            get { return contrasena; }
+            set { contrasena = value; }
+        }
+        
 
         public String ApellidosCliente
         {

@@ -30,12 +30,12 @@ namespace Lib.Data
                 cmd.Parameters.Add(new SqlParameter("@id_cliente", cliente.IdCliente));
                 cmd.Parameters.Add(new SqlParameter("@correo", cliente.Correo));
                 cmd.Parameters.Add(new SqlParameter("@nombre_cliente", cliente.NombreCliente));
-                cmd.Parameters.Add(new SqlParameter("@apellidos_cliente", cliente.ApellidosCliente));
+                cmd.Parameters.Add(new SqlParameter("@apellidos", cliente.ApellidosCliente));
 
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    new DireccionData(cadenaConexion).EditarDireccion(cliente.Direccion, cmd);
+                    new DireccionData(cadenaConexion).EditarDireccion(cliente.Direccion);
 
                     tran.Commit();
                 }//try
@@ -57,23 +57,21 @@ namespace Lib.Data
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
                 SqlCommand cmd = con.CreateCommand();
-                
-                cmd.Transaction = tran; 
+                SqlParameter param = new SqlParameter();
+                cmd.CommandText = "sp_insertar_cliente";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Transaction = tran;                
+                param.ParameterName = "@id_cliente";
+                param.Direction = System.Data.ParameterDirection.Output;
+                cmd.Parameters.Add(new SqlParameter("@correo", cliente.Correo));
+                cmd.Parameters.Add(new SqlParameter("@nombre_cliente", cliente.NombreCliente));
+                cmd.Parameters.Add(new SqlParameter("@apellidos", cliente.ApellidosCliente));
+
                 try
                 {
-                    cliente.Direccion = new DireccionData(cadenaConexion).InsertarDireccion(cliente.Direccion, cmd);
-                    cmd.Parameters.Clear();
-                    cmd.CommandText = "sp_insertar_cliente";
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlParameter param = new SqlParameter("@id_cliente", System.Data.SqlDbType.Int);
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-                    cmd.Parameters.Add(new SqlParameter("@correo", cliente.Correo));
-                    cmd.Parameters.Add(new SqlParameter("@nombre_cliente", cliente.NombreCliente));
-                    cmd.Parameters.Add(new SqlParameter("@apellidos_cliente", cliente.ApellidosCliente));
-                    cmd.Parameters.Add(new SqlParameter("@cod_direccion", cliente.Direccion.CodDireccion));
                     cmd.ExecuteNonQuery();
-                    cliente.IdCliente = Int32.Parse(cmd.Parameters["@id_cliente"].Value.ToString());                                  
+                    cliente.IdCliente = Int32.Parse(cmd.Parameters["@id_cliente"].Value.ToString());
+                    new DireccionData(cadenaConexion).InsertarDireccion(cliente.Direccion);                  
                   
                     tran.Commit();
                 }//try
@@ -103,8 +101,8 @@ namespace Lib.Data
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    new DireccionData(cadenaConexion).EliminarDireccion(cliente.Direccion.CodDireccion, cmd);
-                    tran.Commit();                    
+                    new DireccionData(cadenaConexion).EliminarDireccion(cliente.Direccion.CodDireccion);
+                    
                 }//try
                 catch (SqlException ex)
                 {

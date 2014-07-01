@@ -99,7 +99,6 @@ namespace TangerineApplication
                 cmbProvincia.Enabled = true;
                 cmbCanton.Enabled = true;
                 cmbDistrito.Enabled = true;
-                btnGuardar.Enabled = true;
             }//if
             else 
             {
@@ -110,62 +109,8 @@ namespace TangerineApplication
                 tbTelefono.Enabled = false;
                 cmbProvincia.Enabled = false;
                 cmbCanton.Enabled = false;
-                cmbDistrito.Enabled = false;
-                btnGuardar.Enabled = false;
+                cmbDistrito.Enabled = false;            
             }//else
         }//CbEditar
-
-        private void BtnGuardar(object sender, EventArgs e)
-        {
-            Cliente cliente = (Cliente)lbClientes.SelectedItem;
-
-            Boolean insertar = true;
-
-            if (tbNombre.Text == "")
-            {
-                 insertar = false;      
-            }
-            if (tbApellidos.Text == "")
-            {
-                insertar = false;
-            }
-            if (tbCorreo.Text == "")
-            { 
-                insertar = false;
-            }
-            if (tbUbicacion.Text == "")
-            {
-                insertar = false;
-            }
-            if (tbTelefono.Text == "")
-            {
-                insertar = false;
-            }                      
-
-            if (insertar)
-            {
-                var resultado = MessageBox.Show(this, "Se guardarán los cambios realizados, es probable que esta acción sea irreversible ¿Desea continuar?", "Confirmar cambios", MessageBoxButtons.YesNo);
-
-                if (resultado == System.Windows.Forms.DialogResult.Yes)
-                {
-                    cliente.NombreCliente = tbNombre.Text;
-                    cliente.ApellidosCliente = tbApellidos.Text;
-                    cliente.Correo = tbCorreo.Text;
-                    cliente.Direccion.Ubicacion = tbUbicacion.Text;
-                    cliente.Direccion.Telefono = Int32.Parse(tbTelefono.Text);
-                    cliente.Direccion.Provincia = (Provincia)cmbProvincia.SelectedItem;
-                    cliente.Direccion.Canton = (Canton)cmbCanton.SelectedItem;
-                    cliente.Direccion.Distrito = (Distrito)cmbDistrito.SelectedItem;
-                    cliente.Direccion.CodPostal = tbCodPostal.Text;
-
-                    new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).EditarCliente(cliente);
-                }//se desean guardar los cambios                
-                                
-            }//se puede insertar
-            else
-            {
-                MessageBox.Show(this, "Compruebe que no haya dejado espacios en blanco y que la información sea valida", "No se ha podido completar la acción", MessageBoxButtons.OK);
-            }//no se puede insertar
-        }//BtnGuardar
     }//class
 }//namespace

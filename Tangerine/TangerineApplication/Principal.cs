@@ -56,7 +56,7 @@ namespace TangerineApplication
             Boolean encontrado = false;
             while (i < hijos.Length && !encontrado)
             {
-                if (hijos[i].Name == "NuevoCliente")
+                if (hijos[i].Name == "EliminarCliente")
                 {
                     encontrado = true;
                     hijos[i].Focus();
@@ -66,9 +66,9 @@ namespace TangerineApplication
             }//buscar
             if (!encontrado)
             {
-                NuevoCliente nuevoCliente = new NuevoCliente();
-                nuevoCliente.MdiParent = this;
-                nuevoCliente.Show();
+                EliminarCliente eliminarCliente = new EliminarCliente();
+                eliminarCliente.MdiParent = this;
+                eliminarCliente.Show();
             }
 
         }//Nuevo Cliente
