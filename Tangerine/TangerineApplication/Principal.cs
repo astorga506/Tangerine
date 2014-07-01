@@ -24,31 +24,12 @@ namespace TangerineApplication
 
         }
 
-        private void EditarCliente(object sender, EventArgs e)
+        private void salir(object sender, EventArgs e)
         {
-            Form [] hijos = this.MdiChildren;
+            Application.Exit();
+        }
 
-            int i = 0;
-            Boolean encontrado = false;
-            while (i < hijos.Length && !encontrado)
-            {
-                if (hijos[i].Name == "EditarCliente")
-                {
-                    encontrado = true;
-                    hijos[i].Focus();
-                    hijos[i].WindowState = FormWindowState.Normal;
-                }
-                i++;
-            }//buscar
-            if (!encontrado)
-            {
-                EditarCliente editarCliente = new EditarCliente();
-                editarCliente.MdiParent = this;
-                editarCliente.Show();
-            }
-        }//EditarCliente
-
-        private void NuevoCliente(object sender, EventArgs e)
+        private void Cliente(object sender, EventArgs e)
         {
             Form[] hijos = this.MdiChildren;
 
@@ -56,7 +37,7 @@ namespace TangerineApplication
             Boolean encontrado = false;
             while (i < hijos.Length && !encontrado)
             {
-                if (hijos[i].Name == "NuevoCliente")
+                if (hijos[i].Name == "ClienteForm")
                 {
                     encontrado = true;
                     hijos[i].Focus();
@@ -66,16 +47,11 @@ namespace TangerineApplication
             }//buscar
             if (!encontrado)
             {
-                NuevoCliente nuevoCliente = new NuevoCliente();
-                nuevoCliente.MdiParent = this;
-                nuevoCliente.Show();
+                ClienteForm cliente = new ClienteForm();
+                cliente.MdiParent = this;
+                cliente.Show();
             }
 
-        }//Nuevo Cliente
-
-        private void salir(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
     }//Class

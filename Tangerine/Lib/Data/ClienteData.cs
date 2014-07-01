@@ -104,6 +104,7 @@ namespace Lib.Data
                 {
                     cmd.ExecuteNonQuery();
                     new DireccionData(cadenaConexion).EliminarDireccion(cliente.Direccion.CodDireccion, cmd);
+
                     tran.Commit();                    
                 }//try
                 catch (SqlException ex)
