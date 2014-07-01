@@ -24,20 +24,21 @@ namespace Lib.Data
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
                 SqlCommand cmd = con.CreateCommand();
+                SqlParameter param = new SqlParameter("@cod_proveedor", System.Data.SqlDbType.Int);                    
 
                 cmd.Transaction = tran;
                 try
                 {                    
                     new DireccionData(cadenaConexion).InsertarDireccion(proveedor.Direccion, cmd);
                     cmd.Parameters.Clear();
-                    SqlParameter param = new SqlParameter("@cod_proveedor", System.Data.SqlDbType.Int);                    
                     cmd.CommandText = "sp_insertar_proveedor";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     param.Direction = System.Data.ParameterDirection.Output;
                     cmd.Parameters.Add(param);
                     cmd.Parameters.Add(new SqlParameter("@nombre_proveedor", proveedor.NombreProveedor));
+                    cmd.Parameters.Add(new SqlParameter("@cod_direccion", proveedor.Direccion.CodDireccion));
                     cmd.ExecuteNonQuery();
-                    proveedor.CodProveedor = Int32.Parse(cmd.Parameters["@cod_proveedor"].ToString());
+                    proveedor.CodProveedor = Int32.Parse(cmd.Parameters["@cod_proveedor"].Value.ToString());
                     
                     tran.Commit();
                 }//try
@@ -129,7 +130,54 @@ namespace Lib.Data
                 }//if
             }//using con
             return proveedor;
-        }
+        }//GetProveedor
+
+        public List<Proveedor> GetProveedores(String palabraBusqueda)
+        {
+            List<Proveedor> proveedores = new List<Proveedor>();
+            using (SqlConnection con = new SqlConnection(cadenaConexion))
+            {
+                con.Open();
+                String sqlSelect = "SELECT cod_proveedor, nombre_proveedor, cod_direccion" +
+                                        " FROM Proveedor" +
+                                        " WHERE nombre_proveedor LIKE '%" + palabraBusqueda+"%'";
+                SqlCommand cmd = new SqlCommand(sqlSelect, con);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Proveedor proveedor = new Proveedor();
+                    proveedor.CodProveedor = Int32.Parse(dr["cod_proveedor"].ToString());
+                    proveedor.NombreProveedor = dr.GetString(1);
+                    proveedor.Direccion = new DireccionData(cadenaConexion).GetDireccion(Int32.Parse(dr["cod_direccion"].ToString()));
+                    proveedores.Add(proveedor);
+                }//if
+            }//using con
+            return proveedores;
+        }//GetProveedores
+               
+        public List<Proveedor> GetProveedores()
+        {
+            List<Proveedor> proveedores = new List<Proveedor>();
+            using (SqlConnection con = new SqlConnection(cadenaConexion))
+            {
+                con.Open();
+                String sqlSelect = "SELECT cod_proveedor, nombre_proveedor, cod_direccion" +
+                                        " FROM Proveedor";
+                SqlCommand cmd = new SqlCommand(sqlSelect, con);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Proveedor proveedor = new Proveedor();
+                    proveedor.CodProveedor = Int32.Parse(dr["cod_proveedor"].ToString());
+                    proveedor.NombreProveedor = dr.GetString(1);
+                    proveedor.Direccion = new DireccionData(cadenaConexion).GetDireccion(Int32.Parse(dr["cod_direccion"].ToString()));
+                    proveedores.Add(proveedor);
+                }//if
+            }//using con
+            return proveedores;
+        }//GetProveedores
 
     }//ProveedorData
 }//namespace

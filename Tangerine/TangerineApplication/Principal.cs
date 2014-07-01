@@ -54,5 +54,29 @@ namespace TangerineApplication
 
         }
 
+        private void Proveedor(object sender, EventArgs e)
+        {
+            Form[] hijos = this.MdiChildren;
+
+            int i = 0;
+            Boolean encontrado = false;
+            while (i < hijos.Length && !encontrado)
+            {
+                if (hijos[i].Name == "ProveedorForm")
+                {
+                    encontrado = true;
+                    hijos[i].Focus();
+                    hijos[i].WindowState = FormWindowState.Normal;
+                }
+                i++;
+            }//buscar
+            if (!encontrado)
+            {
+                ProveedorForm proveedor = new ProveedorForm();
+                proveedor.MdiParent = this;
+                proveedor.Show();
+            }
+        }
+
     }//Class
 }//Namespace

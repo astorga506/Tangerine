@@ -106,14 +106,17 @@ namespace TangerineApplication
 
         private void Eliminar(object sender, EventArgs e)
         {
-            Cliente cliente = (Cliente)lbClientes.SelectedItem;
-
-            var resultado = MessageBox.Show(this, "Se eliminará la información del cliente ¿Desea continuar?", "Borrar información", MessageBoxButtons.YesNo);
-
-            if (resultado == System.Windows.Forms.DialogResult.Yes) 
+            if(!nuevo)
             {
-                new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).EliminarCliente(cliente);
-            }        
+                Cliente cliente = (Cliente)lbClientes.SelectedItem;
+
+                var resultado = MessageBox.Show(this, "Se eliminará la información del cliente ¿Desea continuar?", "Borrar información", MessageBoxButtons.YesNo);
+
+                if (resultado == System.Windows.Forms.DialogResult.Yes)
+                {
+                    new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).EliminarCliente(cliente);
+                }   
+            }            
         }
 
         private void Nuevo(object sender, EventArgs e)
@@ -135,11 +138,11 @@ namespace TangerineApplication
 
         private void Guardar(object sender, EventArgs e)
         {
-            if (nuevo)
+            if (Validar())
             {
-                if (Validar())
+                if (nuevo)
                 {
-                    var resultado = MessageBox.Show(this, "Se guardarán los cambios realizados, estos podrían ser cambios posteriormente ¿Desea continuar?", "Guardar información", MessageBoxButtons.YesNo);
+                    var resultado = MessageBox.Show(this, "¿Desea guardar los cambios?", "Guardar información", MessageBoxButtons.YesNo);
 
                     if (resultado == System.Windows.Forms.DialogResult.Yes)
                     {
@@ -149,34 +152,26 @@ namespace TangerineApplication
                         new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).InsertarCliente(cliente);
                     }//se desean guardar los cambios                
 
-                }//se puede insertar
-                else
+                }//registro nuevo 
+                else             
                 {
-                    MessageBox.Show(this, "Compruebe que no haya dejado espacios en blanco y que la información sea valida", "No se ha podido completar la acción", MessageBoxButtons.OK);
-                }//no se puede insertar
-            }
-            else             
+                    Cliente cliente = (Cliente)lbClientes.SelectedItem;
+
+                        var resultado = MessageBox.Show(this, "Se guardarán los cambios realizados, es probable que esta acción sea irreversible ¿Desea continuar?", "Confirmar cambios", MessageBoxButtons.YesNo);
+
+                        if (resultado == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            RecuperarDatos(cliente);
+
+                            new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).EditarCliente(cliente);
+                        }//se desean guardar los cambios
+                }//actualizar registro existente        
+            }//validar
+            else
             {
-                Cliente cliente = (Cliente)lbClientes.SelectedItem;
-
-                if (Validar())
-                {
-                    var resultado = MessageBox.Show(this, "Se guardarán los cambios realizados, es probable que esta acción sea irreversible ¿Desea continuar?", "Confirmar cambios", MessageBoxButtons.YesNo);
-
-                    if (resultado == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        RecuperarDatos(cliente);
-
-                        new ClienteBusiness(ConfigurationManager.ConnectionStrings["Cocoa"].ConnectionString).EditarCliente(cliente);
-                    }//se desean guardar los cambios                
-
-                }//se puede insertar
-                else
-                {
-                    MessageBox.Show(this, "Compruebe que no haya dejado espacios en blanco y que la información sea valida", "No se ha podido completar la acción", MessageBoxButtons.OK);
-                }//no se puede insertar            
-            }
-        }//BtnGuardar
+                MessageBox.Show(this, "Compruebe que no haya dejado espacios en blanco y que la información sea valida", "No se ha podido completar la acción", MessageBoxButtons.OK);
+            }//no se puede insertar      
+        }//Guardar
 
         public Boolean Validar()
         {

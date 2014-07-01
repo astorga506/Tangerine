@@ -57,6 +57,7 @@ namespace Lib.Data
                 con.Open();
                 SqlTransaction tran = con.BeginTransaction();
                 SqlCommand cmd = con.CreateCommand();
+                SqlParameter param = new SqlParameter("@id_cliente", System.Data.SqlDbType.Int);
                 
                 cmd.Transaction = tran; 
                 try
@@ -64,8 +65,7 @@ namespace Lib.Data
                     cliente.Direccion = new DireccionData(cadenaConexion).InsertarDireccion(cliente.Direccion, cmd);
                     cmd.Parameters.Clear();
                     cmd.CommandText = "sp_insertar_cliente";
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlParameter param = new SqlParameter("@id_cliente", System.Data.SqlDbType.Int);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;                    
                     param.Direction = System.Data.ParameterDirection.Output;
                     cmd.Parameters.Add(param);
                     cmd.Parameters.Add(new SqlParameter("@correo", cliente.Correo));
