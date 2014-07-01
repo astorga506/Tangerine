@@ -78,5 +78,29 @@ namespace TangerineApplication
             }
         }
 
+        private void Producto(object sender, EventArgs e)
+        {
+            Form[] hijos = this.MdiChildren;
+
+            int i = 0;
+            Boolean encontrado = false;
+            while (i < hijos.Length && !encontrado)
+            {
+                if (hijos[i].Name == "ProductoForm")
+                {
+                    encontrado = true;
+                    hijos[i].Focus();
+                    hijos[i].WindowState = FormWindowState.Normal;
+                }
+                i++;
+            }//buscar
+            if (!encontrado)
+            {
+                ProductoForm producto = new ProductoForm();
+                producto.MdiParent = this;
+                producto.Show();
+            }
+        }
+
     }//Class
 }//Namespace

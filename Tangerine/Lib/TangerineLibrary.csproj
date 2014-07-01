@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\CategoriaBusiness.cs" />
     <Compile Include="Business\ClienteBusiness.cs" />
     <Compile Include="Business\DireccionBusiness.cs" />
+    <Compile Include="Business\ProductoBusiness.cs" />
     <Compile Include="Business\ProveedorBusiness.cs" />
     <Compile Include="Data\CategoriaData.cs" />
     <Compile Include="Data\ClienteData.cs" />
